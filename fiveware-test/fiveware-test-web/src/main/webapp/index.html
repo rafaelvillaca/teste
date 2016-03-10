@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+</head>
+<body>
+
+	<div id="Formulario">
+		<form name="Exemplo" method="post">
+			NOME: <input name="Campo" id="Campo" type="text" /> <br>
+			FALA OUTRA LINGUA: 
+				<input type="checkbox" id="ingles" name="ingles" value="ingles">Inglês 
+				<input type="checkbox" id="espanhol" name="espanhol" value="espanhol">Espanhol<br> 
+				ESTADO CIVIL: <select id="civil" name="civil">
+				<option value="SOLTEIRO">SOLTEIRO</option>
+				<option value="CASADO">CASADO</option>
+			</select> <br> TRABALHANDO: <input type="radio" id="trabalhando"
+				name="trabalhando" value="sim">SIM <input type="radio"
+				name="trabalhando" value="nao">NAO <br> <br>
+		</form>
+		<button type="button" onclick="loadDoc()">ENVIAR</button>
+	</div>
+
+
+	<p id="teste"></p>
+
+
+	<script>
+		function loadDoc() {
+
+			var nome_ = document.getElementById("Campo").value;
+			var ingles_ = document.getElementById("ingles").checked;
+			var espanhol_ = document.getElementById("espanhol").checked;
+			var estado_civil_ = document.getElementById("civil").value;
+			var trabalhando_ = document.getElementById("trabalhando").checked;
+
+			var params = "nome=" + nome_ + "&ingles=" + ingles_ + "&espanhol="
+					+ espanhol_ + "&estadoCivil=" + estado_civil_
+					+ "&trabalhando=" + trabalhando_;
+			var url = "/fiveware-test/formulario";
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (xhttp.readyState == 4 && xhttp.status == 200) {
+					document.getElementById("teste").innerHTML = xhttp.responseText;
+
+				} else {
+					document.getElementById("teste").innerHTML = "AGUARDE";
+				}
+			};
+
+			xhttp.open("POST", url, true);
+			xhttp.setRequestHeader("Content-type",
+					"application/x-www-form-urlencoded");
+			xhttp.setRequestHeader("Content-length", params.length);
+			xhttp.setRequestHeader("Connection", "close");
+			xhttp.send(params);
+		}
+	</script>
+
+
+
+</body>
+</html>
